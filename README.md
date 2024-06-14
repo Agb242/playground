@@ -193,9 +193,9 @@ Ce script envoie une requête POST à Grafana pour créer un nouvel utilisateur 
 
 ---
 
-![Capture d’écran (72).png]([https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(83).png](https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(88).png))
+![Capture d’écran (72).png](https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(88).png)
 
-![Capture d’écran (72).png]([https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(83).png](https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(89).png))
+![Capture d’écran (72).png](https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(89).png)
 
 ![Capture d’écran (72).png](https://raw.githubusercontent.com/Agb242/playground/main/images/Capture%20d%E2%80%99%C3%A9cran%20(83).png)
 
