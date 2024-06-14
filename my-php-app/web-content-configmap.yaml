@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-content
+data:
+  index.php: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Playground</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                display: flex;
+                justify-content: center; /* Centrer horizontalement */
+                align-items: center; /* Centrer verticalement */
+                height: 100vh; /* 100% de la hauteur de la vue */
+                margin: 0;
+            }
+
+            .container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 400px;
+                text-align: center;
+            }
+
+            form {
+                margin-bottom: 20px;
+            }
+
+            button {
+                padding: 10px 20px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+            a {
+                color: #007bff;
+                text-decoration: none;
+                margin-right: 10px;
+            }
+
+            a:hover {
+                text-decoration: underline;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Playground</h1>
+            <form method="post">
+                <button type="submit" name="create_user">Playground Monitoring</button>
+            </form>
+        
+      
+  
+    <?php
+    if (isset($_POST['create_user'])) {
+        // Exécuter le script bash
+        $output = shell_exec('bash ./scripts/script.sh');
+        echo "<pre>$output</pre>";
+
+        // Afficher les liens
+   
+        echo '<a href="https://b2fe-102-129-82-230.ngrok-free.app">Grafana lab</a>';
+        echo '<a href="https://614c-102-129-82-230.ngrok-free.app">Prometheus lab</a>';
+    }
+    ?>
+                
+    </body>
+    </html>
+
+  create_user.sh: |
+    #!/bin/bas
+ 
+     # Variables
+     GRAFANA_URL="http://127.0.0.1:3000"
+     ADMIN_USER="admin"
+     ADMIN_PASSWORD="admin"
+ 
+     # Générer un nom d'utilisateur aléatoire
+     USERNAME="user$(date +%s)"
+     PASSWORD="password"
+
+     # Création de l'utilisateur via l'API Grafana
+     RESPONSE=$(curl -s -X POST -H "Content-Type: application/json" -d '{
+       "name": "'$USERNAME'",
+       "email": "'$USERNAME'@example.com",
+       "login": "'$USERNAME'",
+       "password": "'$PASSWORD'",
+       "OrgId": 1
+     }' $GRAFANA_URL/api/admin/users -u $ADMIN_USER:$ADMIN_PASSWORD)
+
+     # Vérifier la réponse de l'API
+     if [[ $RESPONSE == *"\"id\":"* ]]; then
+       echo "Utilisateur créé avec succès : $USERNAME"
+       echo "Mot de passe créé avec succès : $PASSWORD"
+     else
+       echo "Erreur lors de la création de l'utilisateur : $RESPONSE"
+     fi
+

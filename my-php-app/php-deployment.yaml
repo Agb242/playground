@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-php-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-php-app
+  template:
+    metadata:
+      labels:
+        app: my-php-app
+    spec:
+      initContainers:
+      - name: init-permissions
+        image: busybox
+        command: ['sh', '-c', 'chmod 777 /scripts/create_user.sh']
+        volumeMounts:
+        - name: scripts
+          mountPath: /scripts
+      containers:
+      - name: php-app
+        image: php:apache
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: web-content
+          mountPath: /var/www/html
+        - name: scripts
+          mountPath: /scripts
+          subPath: create_user.sh
+        - name: php-config-volume
+          mountPath: /etc/php-custom.ini
+          subPath: php.ini
+      volumes:
+      - name: web-content
+        configMap:
+          name: web-content
+      - name: scripts
+        configMap:
+          name: web-content
+          items:
+          - key: create_user.sh
+            path: create_user.sh
+      - name: php-config-volume
+        configMap:
+          name: php-config
+
